@@ -1,2 +1,2 @@
 # pycharm_singularity
-Pycharm in Singularity
+Pycharm in Singularity container.
