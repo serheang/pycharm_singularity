@@ -1,2 +1,2 @@
-# singularity-pycharm
+# pycharm_singularity
 Pycharm in Singularity
