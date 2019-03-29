@@ -33,4 +33,3 @@ from:ubuntu:latest
 %runscript
   echo "Run Pycharm"
   pycharm
-
