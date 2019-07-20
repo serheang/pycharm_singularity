@@ -1,7 +1,7 @@
 bootstrap: docker
 from:ubuntu:latest
 
-%label
+%labels
   MAINTAINER setan
   WHATAMI pycharm-edu
   VERSION 2018.3
@@ -17,19 +17,23 @@ from:ubuntu:latest
   apt-get install -y python python-pip
   apt-get clean
 
-  ## CLEANUP
-  rm -f pycharm-edu*.tar.gz
+  ## PREP
   rm -rf /opt/pycharm-edu-2018.3
   rm -f /opt/pycharm
   rm -f /usr/local/bin/pycharm
   rm -f /usr/local/bin/inspect
+
+  ## Get PyCharm
   wget https://download.jetbrains.com/python/pycharm-edu-2018.3.tar.gz
   tar zxvf pycharm-edu-2018.3.tar.gz -C /opt
   ln -s /opt/pycharm-edu-2018.3 /opt/pycharm
   ln -s /opt/pycharm/bin/pycharm.sh /usr/local/bin/pycharm
   ln -s /opt/pycharm/bin/inspect.sh /usr/local/bin/inspect
+
+  ## CLEANUP
   rm pycharm-edu-2018.3.tar.gz
 
 %runscript
   echo "Run Pycharm"
   pycharm
+
