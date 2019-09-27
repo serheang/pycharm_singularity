@@ -3,14 +3,14 @@ from:alpine:latest
 
 %labels
   MAINTAINER setan
-  WHATAMI pycharm-edu
+  WHATAMI pycharm-community
   VERSION 2019.2
 
 %environment
   export PATH=/usr/local/bin:$PATH
 
 %post
-  export PYCHARM="pycharm-edu-2019.2.1"
+  export PYCHARM="pycharm-community-2019.2.3"
   apk update
   apk add wget 
   apk add python py-pip 
