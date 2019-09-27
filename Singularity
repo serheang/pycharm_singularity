@@ -1,39 +1,40 @@
 bootstrap: docker
-from:ubuntu:latest
+from:alpine:latest
 
 %labels
   MAINTAINER setan
   WHATAMI pycharm-edu
-  VERSION 2018.3
+  VERSION 2019.2
 
 %environment
   export PATH=/usr/local/bin:$PATH
 
 %post
-  apt-get update -y
-  apt-get install -y wget
-  apt-get install -y libxext6 libxrender1 libxtst6 libxi6 libfreetype6 
-  apt-get install -y python3 python3-pip 
-  apt-get install -y python python-pip
-  apt-get clean
-
+  export PYCHARM="pycharm-edu-2019.2.1"
+  apk update
+  apk add wget 
+  apk add python py-pip 
+  apk add python3 py3-pip 
+  apk add openjdk11-jre
+  apk add libcanberra-gtk3
+  apk add xfce4 xfce4-terminal
   ## PREP
-  rm -rf /opt/pycharm-edu-2018.3
+  rm -rf /opt/${PYCHARM}
   rm -f /opt/pycharm
   rm -f /usr/local/bin/pycharm
   rm -f /usr/local/bin/inspect
 
   ## Get PyCharm
-  wget https://download.jetbrains.com/python/pycharm-edu-2018.3.tar.gz
-  tar zxvf pycharm-edu-2018.3.tar.gz -C /opt
-  ln -s /opt/pycharm-edu-2018.3 /opt/pycharm
+  wget https://download.jetbrains.com/python/${PYCHARM}.tar.gz
+  tar zxvf ${PYCHARM}.tar.gz -C /opt
+  ln -s /opt/${PYCHARM} /opt/pycharm
   ln -s /opt/pycharm/bin/pycharm.sh /usr/local/bin/pycharm
   ln -s /opt/pycharm/bin/inspect.sh /usr/local/bin/inspect
 
   ## CLEANUP
-  rm pycharm-edu-2018.3.tar.gz
+  rm ${PYCHARM}.tar.gz
 
 %runscript
-  echo "Run Pycharm"
-  pycharm
-
+  echo "Run Pycharm in alpine container"
+  ## piping error to /dev/null to reduce clutter on screen
+  /opt/pycharm/bin/pycharm.sh 2>/dev/null
