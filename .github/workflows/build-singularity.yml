@@ -16,6 +16,6 @@ jobs:
       - name: install singularity dependencies
         run: sudo apt install -y build-essential libseccomp-dev  pkg-config squashfs-tools cryptsetup curl wget git
       - name: install singularity
-        run: sudo dpkg -i https://github.com/sylabs/singularity/releases/download/v3.9.4/singularity-ce_3.9.4-focal_amd64.deb
+        run:  wget https://github.com/sylabs/singularity/releases/download/v3.9.4/singularity-ce_3.9.4-focal_amd64.deb -O /tmp/singularity-ce.deb && sudo dpkg -i /tmp/singularity-ce.deb
       - name: build pycharm
         run: sudo singularity build pycharm.sif Singularity
