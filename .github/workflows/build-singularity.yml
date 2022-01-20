@@ -19,7 +19,7 @@ jobs:
           - '3.8.2'
           - '3.8.3'
           - '3.8.4'
-          - '3.8.5'
+          - '3.9.4'
     container:
       image: quay.io/singularity/singularity:v${{ matrix.singularity_version }}
       options: --privileged
