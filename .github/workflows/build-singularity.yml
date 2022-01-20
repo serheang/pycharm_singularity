@@ -36,3 +36,9 @@ jobs:
           name: pycharm.sif # optional, default is artifact
           # A file, directory or wildcard pattern that describes what to upload
           path: pycharm*.sif
+      - name: Login and Deploy Container
+        env: 
+          tag: latest
+        run: |         
+            echo ${{ secrets.GITHUB_TOKEN }} | singularity remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
+            singularity push container.sif oras://ghcr.io/${GITHUB_REPOSITORY}:${tag}
