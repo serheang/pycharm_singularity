@@ -13,7 +13,6 @@ from:alpine:latest
   export PYCHARM="pycharm-community-2019.2.3"
   apk update
   apk add wget 
-  apk add python py-pip 
   apk add python3 py3-pip 
   apk add openjdk11-jre
   apk add libcanberra-gtk3
