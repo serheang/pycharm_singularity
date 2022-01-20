@@ -1,0 +1,23 @@
+name: build-singularity-container
+on:
+  # Do something on push
+  push:
+    # Ediot the branches here
+    branches:
+      - main
+      - master
+
+  # Do something on pull
+  pull_reuqest: []
+
+jobs:
+  changes:
+    name: "Test build recipes"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: install singularity
+        run: sudo apt -y install singularity
+      - name: build singularity recipe
+        run: sudo singularity build pycharm.sif Singularity
