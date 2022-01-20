@@ -13,7 +13,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: install singularity dependencies
+        run: sudo apt -y update && sudo apt-get install -y \
+             build-essential \
+             libseccomp-dev \
+             pkg-config \
+             squashfs-tools \
+             cryptsetup \
+             curl wget git
       - name: install singularity
-        run: sudo apt -y install singularity
-      - name: build singularity recipe
+        run: sudo dpkg -i https://github.com/sylabs/singularity/releases/download/v3.9.4/singularity-ce_3.9.4-focal_amd64.deb
+      - name: build pycharm
         run: sudo singularity build pycharm.sif Singularity
