@@ -22,11 +22,6 @@ jobs:
       options: --privileged
      
     steps:
-      - name: Load ccache
-        uses: actions/cache@v2
-        with:
-          path: ~/.ccahe
-          key: ${{ matrix.singularity_version }}
       - name: Checkout
         uses: actions/checkout@v2
       - name: build pycharm
