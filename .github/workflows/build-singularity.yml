@@ -14,7 +14,6 @@ jobs:
       # Keep going on other deployments if anything bloops
       fail-fast: false
       matrix:
-        changed_file: ${{ fromJson(needs.changes.outputs.changed_file) }}
         singularity_version:
           - '3.8.1'
           - '3.8.2'
