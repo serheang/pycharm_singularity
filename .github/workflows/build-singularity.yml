@@ -15,6 +15,8 @@ jobs:
       fail-fast: false
       matrix:
         singularity_version:
+          - '2.6'
+          - '3.0'
           - '3.8.4'
           - '3.9.4'
     container:
@@ -25,7 +27,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: build pycharm
-        run: sudo singularity build pycharm-${{ matrix.singularity_version }}.sif Singularity
+        run: singularity build pycharm-${{ matrix.singularity_version }}.sif Singularity
       - name: Login and Deploy Container 
         run: |         
             echo ${{ secrets.GITHUB_TOKEN }} | singularity remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
