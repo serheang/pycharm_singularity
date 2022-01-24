@@ -15,27 +15,25 @@ jobs:
       fail-fast: false
       matrix:
         singularity_version:
-          - '2.6'
-          - '3.0'
-          - '3.8.4-slim'
-          - '3.9.4-slim'
+          - '3.8.4'
+          - '3.9.4'
     container:
-      image: quay.io/singularity/singularity:v${{ matrix.singularity_version }}
+      image: quay.io/singularity/singularity:v${{ matrix.singularity_version }}-slim
       options: --privileged
      
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: build pycharm
-        run: singularity build pycharm-${{ matrix.singularity_version|int }}.sif Singularity
+        run: singularity build pycharm-${{ matrix.singularity_version }}.sif Singularity
       - name: Login and Deploy Container 
         run: |         
             echo ${{ secrets.GITHUB_TOKEN }} | singularity remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
-            singularity push pycharm-${{ matrix.singularity_version|int }}.sif oras://ghcr.io/${GITHUB_REPOSITORY}:${{ matrix.singularity_version }}
+            singularity push pycharm-${{ matrix.singularity_version }}.sif oras://ghcr.io/${GITHUB_REPOSITORY}:${{ matrix.singularity_version }}
       - name: Login and Deploy Container to tag:latest
-        if: (matrix.singularity_version == '3.9.4-slim')
+        if: (matrix.singularity_version == '3.9.4')
         env:
           tag: latest
         run: |         
             echo ${{ secrets.GITHUB_TOKEN }} | singularity remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
-            singularity push pycharm-${{ matrix.singularity_version|int }}.sif oras://ghcr.io/${GITHUB_REPOSITORY}:${tag}
+            singularity push pycharm-${{ matrix.singularity_version }}.sif oras://ghcr.io/${GITHUB_REPOSITORY}:${tag}
