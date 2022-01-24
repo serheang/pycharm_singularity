@@ -27,15 +27,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: build pycharm
-        run: singularity build pycharm-${{ matrix.singularity_version }}.sif Singularity
+        run: singularity build pycharm-${{ matrix.singularity_version|int }}.sif Singularity
       - name: Login and Deploy Container 
         run: |         
             echo ${{ secrets.GITHUB_TOKEN }} | singularity remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
-            singularity push pycharm-${{ matrix.singularity_version }}.sif oras://ghcr.io/${GITHUB_REPOSITORY}:${{ matrix.singularity_version }}
-      - name: Login and Deploy Container for 3.9.4
-        if: (matrix.singularity_version == '3.9.4')
+            singularity push pycharm-${{ matrix.singularity_version|int }}.sif oras://ghcr.io/${GITHUB_REPOSITORY}:${{ matrix.singularity_version }}
+      - name: Login and Deploy Container to tag:latest
+        if: (matrix.singularity_version == '3.9.4-slim')
         env:
           tag: latest
         run: |         
             echo ${{ secrets.GITHUB_TOKEN }} | singularity remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
-            singularity push pycharm-${{ matrix.singularity_version }}.sif oras://ghcr.io/${GITHUB_REPOSITORY}:${tag}
+            singularity push pycharm-${{ matrix.singularity_version|int }}.sif oras://ghcr.io/${GITHUB_REPOSITORY}:${tag}
