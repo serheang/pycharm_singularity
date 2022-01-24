@@ -17,10 +17,10 @@ jobs:
         singularity_version:
           - '2.6'
           - '3.0'
-          - '3.8.4'
-          - '3.9.4'
+          - '3.8.4-slim'
+          - '3.9.4-slim'
     container:
-      image: quay.io/singularity/singularity:v${{ matrix.singularity_version }}-slim
+      image: quay.io/singularity/singularity:v${{ matrix.singularity_version }}
       options: --privileged
      
     steps:
