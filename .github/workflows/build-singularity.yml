@@ -15,8 +15,9 @@ jobs:
       fail-fast: false
       matrix:
         singularity_version:
+          - '2.6'
           - '3.8.4'
-          - '3.9.4'
+          - 'latest'
     container:
       image: quay.io/singularity/singularity:v${{ matrix.singularity_version }}
       options: --privileged
@@ -27,8 +28,6 @@ jobs:
       - name: build pycharm
         run: sudo singularity build pycharm-${{ matrix.singularity_version }}.sif Singularity
       - name: Login and Deploy Container
-        env: 
-          tag: latest
         run: |         
             echo ${{ secrets.GITHUB_TOKEN }} | singularity remote login -u ${{ secrets.GHCR_USERNAME }} --password-stdin oras://ghcr.io
-            singularity push pycharm-${{ matrix.singularity_version }}.sif oras://ghcr.io/${GITHUB_REPOSITORY}:${tag}
+            singularity push pycharm-${{ matrix.singularity_version }}.sif oras://ghcr.io/${GITHUB_REPOSITORY}:${{ matrix.singularity_version }}
