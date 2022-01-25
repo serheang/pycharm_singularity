@@ -2,7 +2,7 @@ name: build-singularity-container
 on:
   # Do something on push
   push:
-    # Ediot the branches here
+    # Edit the branches here
     branches:
       - main
       - master
